@@ -1,0 +1,40 @@
+{
+  "name": "devops-ci-sample",
+  "version": "1.0.0",
+  "description": "Sample Node.js web app for practicing Jenkins CI/CD (tests, coverage, JUnit, coverage publish, optional SonarQube).",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "mocha 'test/**/*.test.js' --timeout 10000 --reporter mocha-junit-reporter --reporter-options mochaFile=test-results/mocha-results.xml --exit",
+    "coverage": "nyc --reporter=lcov --reporter=text-summary npm test",
+    "lint": "eslint .",
+    "audit": "npm audit --audit-level=low || true"
+  },
+  "keywords": [
+    "jenkins",
+    "ci",
+    "mocha",
+    "coverage",
+    "nyc",
+    "junit",
+    "sonarqube"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "lodash": "4.17.20"
+  },
+  "devDependencies": {
+    "chai": "^4.4.1",
+    "chai-http": "^4.4.0",
+    "eslint": "^8.57.0",
+    "mocha": "^10.7.0",
+    "mocha-junit-reporter": "^2.2.1",
+    "nyc": "^15.1.0",
+    "nodemon": "^3.1.4"
+  }
+}
