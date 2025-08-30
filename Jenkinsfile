@@ -10,6 +10,7 @@ pipeline{
                     node -v
                     npm -v
                 '''
+                echo "$GIT_COMMIT"
             }
         }
         stage("Install Dependency"){
