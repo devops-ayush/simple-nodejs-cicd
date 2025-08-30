@@ -20,6 +20,7 @@ pipeline{
         stage("Dependency Check"){
             steps{
                 sh 'npm audit'
+                sh 'npm audit fix --force'
             }
         }
         stage("Test"){
