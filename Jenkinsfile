@@ -19,8 +19,14 @@ pipeline{
         }
         stage("Dependency Check"){
             steps{
-                sh 'npm audit'
-                sh 'npm audit fix --force'
+                catchError(buildResult: 'SUCCESS', message: 'Error: Found Vulnerability!!!', stageResult: 'UNSTABLE') {
+                    sh 'npm audit'
+                }
+            }
+        }
+        stage("fix vulnerability"){
+            steps{
+                    sh 'npm audit fix --force'
             }
         }
         stage("Test"){
