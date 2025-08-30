@@ -12,9 +12,14 @@ pipeline{
                 '''
             }
         }
-        stage("Install Dependecy"){
+        stage("Install Dependency"){
             steps{
                 sh 'npm install'
+            }
+        }
+        stage("Dependency Check"){
+            steps{
+                sh 'npm audit'
             }
         }
         stage("Test"){
