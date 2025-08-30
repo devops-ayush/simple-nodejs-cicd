@@ -23,5 +23,10 @@ pipeline{
                  junit allowEmptyResults: true, keepProperties: true, skipMarkingBuildUnstable: true, stdioRetention: 'ALL', testResults: 'test-results/mocha-results.xml'
             }
         }
+        stage("Check coverage"){
+            steps{
+                sh 'npm run coverage'
+            }
+        }
     }
 }
