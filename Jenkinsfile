@@ -38,6 +38,7 @@ pipeline{
         stage("Check coverage"){
             steps{
                 sh 'npm run coverage'
+                publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, icon: '', keepAll: false, reportDir: 'coverage/lcov-report', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: '', useWrapperFileDirectly: true])
             }
         }
     }
