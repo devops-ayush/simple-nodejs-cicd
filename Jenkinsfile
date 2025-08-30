@@ -20,6 +20,7 @@ pipeline{
         stage("Test"){
             steps{
                  sh 'npm test'
+                 junit allowEmptyResults: true, keepProperties: true, skipMarkingBuildUnstable: true, stdioRetention: 'ALL', testResults: 'test-results/mocha-results.xml'
             }
         }
     }
