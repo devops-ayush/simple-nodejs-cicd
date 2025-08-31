@@ -52,7 +52,7 @@ pipeline{
                 branch "feature/CI"
             }
             steps{
-                sh 'docker build -t nodejs:$GIT_COMMIT' .
+                sh 'docker build -t nodejs:$GIT_COMMIT . '
             }
         }
     }
