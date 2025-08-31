@@ -1,5 +1,7 @@
 pipeline{
-    agent any 
+    agent {
+        label "master"
+    }
     tools{
         nodejs 'NodeJS 22.19.0'
     }
@@ -40,6 +42,17 @@ pipeline{
             steps{
                 sh 'npm run coverage'
                 publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, icon: '', keepAll: false, reportDir: 'coverage/lcov-report', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+            }
+        }
+        stage("Build Docker Image"){
+            agent{
+                label "Docker"
+            }
+            when{
+                branch "feature/CI"
+            }
+            steps{
+                sh 'docker build -t nodejs:$GIT_COMMIT' .
             }
         }
     }
