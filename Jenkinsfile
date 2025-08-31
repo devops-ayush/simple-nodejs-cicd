@@ -48,7 +48,6 @@ pipeline{
             agent{
                 label "Docker"
             }
-<<<<<<< HEAD
             steps{
                 sh 'docker build -t ayush966/nodejs:$GIT_COMMIT . '
             }
@@ -59,15 +58,8 @@ pipeline{
             }
             steps{
                 withDockerRegistry(credentialsId: 'dockerHub-creds') {
-                    sh 'docker push ayush966/nodejs:$GIT_COMMIT'
+                    sh 'docker push ayush966/nodejs:$GIT_COMMIT'. '
                 }
-=======
-            when{
-                branch "feature/CI"
-            }
-            steps{
-                sh 'docker build -t nodejs:$GIT_COMMIT . '
->>>>>>> feature/CI
             }
         }
     }
