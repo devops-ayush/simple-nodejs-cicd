@@ -58,7 +58,7 @@ pipeline{
             }
             steps{
                 withDockerRegistry(credentialsId: 'dockerHub-creds') {
-                    sh 'docker push ayush966/nodejs:$GIT_COMMIT'. '
+                    sh 'docker push ayush966/nodejs:$GIT_COMMIT'
                 }
             }
         }
