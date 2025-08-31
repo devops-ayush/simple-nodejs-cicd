@@ -1,5 +1,7 @@
 pipeline{
-    agent any 
+    agent {
+        label "master"
+    }
     tools{
         nodejs 'NodeJS 22.19.0'
     }
@@ -42,15 +44,22 @@ pipeline{
                 publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, icon: '', keepAll: false, reportDir: 'coverage/lcov-report', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: '', useWrapperFileDirectly: true])
             }
         }
-        stage("Build Docker image"){
-            agent {
-                label 'Docker'
-            }
-            when{
-                branch "feature/CI"
+        stage("Build Docker Image"){
+            agent{
+                label "Docker"
             }
             steps{
-                sh 'docker build nodejsapp:$BUILD_NUMBER .'
+                sh 'docker build -t ayush966/nodejs:$GIT_COMMIT . '
+            }
+        }
+        stage("Push Image"){
+            agent{
+                label "Docker"
+            }
+            steps{
+                withDockerRegistry(credentialsId: 'dockerHub-creds') {
+                    sh 'docker push ayush966/nodejs:$GIT_COMMIT'
+                }
             }
         }
     }
