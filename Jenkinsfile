@@ -42,5 +42,16 @@ pipeline{
                 publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, icon: '', keepAll: false, reportDir: 'coverage/lcov-report', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: '', useWrapperFileDirectly: true])
             }
         }
+        stage("Build Docker image"){
+            agent {
+                label 'Docker'
+            }
+            when{
+                branch "feature/CI"
+            }
+            steps{
+                sh 'docker build nodejsapp:$BUILD_NUMBER .'
+            }
+        }
     }
 }
