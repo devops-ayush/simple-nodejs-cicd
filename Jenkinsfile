@@ -44,17 +44,6 @@ pipeline{
                 publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, icon: '', keepAll: false, reportDir: 'coverage/lcov-report', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: '', useWrapperFileDirectly: true])
             }
         }
-        stage("Delete Old images"){
-            agent{
-                label "Docker"
-            }
-            steps{
-                sh ''' 
-                    tag=$(git rev-parse HEAD~2)
-                    docker rmi ayush966/nodejs:$tag || true
-                      ''' 
-            }
-        }
         stage("Build Docker Image"){
             agent{
                 label "Docker"
@@ -73,6 +62,17 @@ pipeline{
                 }
             }
         }
+        stage("Delete Old images"){
+            agent{
+                label "Docker"
+            }
+            steps{
+                sh ''' 
+                    tag=$(git rev-parse HEAD~2)
+                    docker rmi ayush966/nodejs:$tag || true
+                      ''' 
+            }
+        }        
         stage("Update tag in k8s"){
             steps{
                 dir('k8s/') {
