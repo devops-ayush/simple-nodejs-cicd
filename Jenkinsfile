@@ -83,7 +83,7 @@ pipeline{
         }
         stage("Deploy to k8s"){
             steps{
-                withCredentials([string(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
+                withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
                     dir('k8s/'){
                         sh "kubectl apply -f ."
                     }
