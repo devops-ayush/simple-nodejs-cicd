@@ -5,6 +5,7 @@ pipeline{
     tools{
         nodejs 'NodeJS 22.19.0'
     }
+
     stages{
         stage("Version Check"){
             steps{
@@ -84,7 +85,11 @@ pipeline{
         always{
             node("Docker"){
                 script{
-                    sh 'docker rmi ayush966/nodejs:$(git rev-parse HEAD~2) || true'
+                    
+                    sh ''' 
+                        git pull origin main
+                        docker rmi ayush966/nodejs:$(git rev-parse HEAD~2) || true
+                    '''
                 }
             }
         }
