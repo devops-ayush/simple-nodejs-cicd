@@ -49,7 +49,10 @@ pipeline{
                 label "Docker"
             }
             steps{
-                sh 'docker system prune -af'
+                sh ''' 
+                    tag=$(git rev-parse HEAD~2)
+                    docker rmi ayush966/nodejs:$tag
+                      '''
             }
         }
         stage("Build Docker Image"){
@@ -70,6 +73,12 @@ pipeline{
                 }
             }
         }
-
+        stage("Update tag in k8s"){
+            steps:{
+                dir('k8s/') {
+                   sh "sed -i 's#ayush966/nodejs:.*#ayush966/nodejs966:$GIT_COMMIT#g' deployment.yaml" 
+                }
+            }
+        }
     }
 }
