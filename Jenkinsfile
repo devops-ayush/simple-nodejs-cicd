@@ -81,5 +81,12 @@ pipeline{
                 }
             }
         }
+        stage("Deploy to k8s"){
+            steps{
+                dir(/k8s){
+                    sh "kubectl -f apply ."
+                }
+            }
+        }
     }
 }
