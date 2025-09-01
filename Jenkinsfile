@@ -74,7 +74,7 @@ pipeline{
             }
         }
         stage("Update tag in k8s"){
-            steps:{
+            steps{
                 dir('k8s/') {
                    sh "sed -i 's#ayush966/nodejs:.*#ayush966/nodejs966:$GIT_COMMIT#g' deployment.yaml" 
                 }
