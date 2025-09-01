@@ -83,7 +83,9 @@ pipeline{
     post{
         always{
             node("Docker"){
-                sh "docker rmi ayush966/nodejs:$(git rev-parse HEAD~2) || true"
+                script{
+                    sh "docker rmi ayush966/nodejs:$(git rev-parse HEAD~2) || true"
+                }
             }
         }
     }
