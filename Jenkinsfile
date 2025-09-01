@@ -61,18 +61,7 @@ pipeline{
                     sh 'docker push ayush966/nodejs:$GIT_COMMIT'
                 }
             }
-        }
-        stage("Delete Old images"){
-            agent{
-                label "Docker"
-            }
-            steps{
-                sh ''' 
-                    tag=$(git rev-parse HEAD~2)
-                    docker rmi ayush966/nodejs:$tag || true
-                      ''' 
-            }
-        }        
+        }       
         stage("Update tag in k8s"){
             steps{
                 dir('k8s/') {
@@ -89,6 +78,13 @@ pipeline{
                     }
                 }
             }    
+        }
+    }
+    post{
+        always{
+            node("Docker"){
+                sh "docker rmi ayush966/nodejs:$(git rev-parse HEAD~2) || true"
+            }
         }
     }
 }
