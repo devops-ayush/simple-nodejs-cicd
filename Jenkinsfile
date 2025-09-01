@@ -51,8 +51,8 @@ pipeline{
             steps{
                 sh ''' 
                     tag=$(git rev-parse HEAD~2)
-                    docker rmi ayush966/nodejs:$tag
-                      '''
+                    docker rmi ayush966/nodejs:$tag || true
+                      ''' 
             }
         }
         stage("Build Docker Image"){
