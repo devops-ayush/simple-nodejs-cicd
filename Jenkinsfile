@@ -26,7 +26,7 @@ pipeline{
                     sh 'npm audit'
                 }
             }
-        }
+        }   
         stage("fix vulnerability"){
             steps{
                     sh 'npm audit fix --force'
@@ -42,6 +42,14 @@ pipeline{
             steps{
                 sh 'npm run coverage'
                 publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, icon: '', keepAll: false, reportDir: 'coverage/lcov-report', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+            }
+        }
+        stage("Delete Old images"){
+            agent{
+                label "Docker"
+            }
+            steps{
+                sh 'docker system prune -af'
             }
         }
         stage("Build Docker Image"){
@@ -62,5 +70,6 @@ pipeline{
                 }
             }
         }
+
     }
 }
