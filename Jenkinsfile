@@ -92,6 +92,7 @@ pipeline{
                     '''
                 }
             }
+            sh 'curl http://$(cat -s ifconfig.me):30500/api/Health | grep ok '
         }
     }
 }
