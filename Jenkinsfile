@@ -31,7 +31,6 @@ pipeline{
                         sh 'npm audit'
                         env.DEPENDENCY_CHECK = 'UNSTABLE'
                 }
-                }
             }
         }   
         stage("fix vulnerability"){
