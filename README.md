@@ -1,6 +1,6 @@
 # DevOps CI Sample (Node.js)
 
-##Folder Structure
+## Folder Structure
 - `public/`
 - `src/`
 - `test/`
