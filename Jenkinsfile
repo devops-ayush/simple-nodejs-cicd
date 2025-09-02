@@ -59,7 +59,11 @@ pipeline{
                 label "Docker"
             }
             steps{
-                sh 'docker build -t ayush966/nodejs:$GIT_COMMIT . '
+
+                sh '''
+                    git pull origin main
+                    docker build -t ayush966/nodejs:$GIT_COMMIT . 
+                '''
             }
         }
         stage("Push Image"){
@@ -94,11 +98,7 @@ pipeline{
         always{
             node("Docker"){
                 script{
-                    
-                    sh ''' 
-                        git pull origin main
-                        docker rmi ayush966/nodejs:$(git rev-parse HEAD~2) || true
-                    '''
+                    sh 'docker image prune -af'
                 }
             }
             sh 'curl http://$(curl -s ifconfig.me):30500/api/Health | grep ok '
