@@ -5,6 +5,9 @@ pipeline{
     tools{
         nodejs 'NodeJS 22.19.0'
     }
+    environment{
+        DEPENDENCY_CHECK = ''
+    }
 
     stages{
         stage("Version Check"){
@@ -25,12 +28,18 @@ pipeline{
             steps{
                 catchError(buildResult: 'SUCCESS', message: 'Error: Found Vulnerability!!!', stageResult: 'UNSTABLE') {
                     sh 'npm audit'
+                    $DEPENDENCY_CHECK = 'UNSTABLE'
                 }
             }
         }   
         stage("fix vulnerability"){
+            when {
+                    environment ignoreCase: true, name: 'DEPENDENCY_CHECK', value: 'UNSTABLE'
+            }
             steps{
                     sh 'npm audit fix --force'
+                    error("Please fix the vulnerabilities and Push again!!!!")
+                    
             }
         }
         stage("Test"){
