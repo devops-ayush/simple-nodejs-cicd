@@ -32,7 +32,9 @@ pipeline{
         }   
         stage("fix vulnerability"){
             when {
+                expression{
                     currentBuild.result == 'UNSTABLE'
+                }    
             }
             steps{
                     sh 'npm audit fix --force'
