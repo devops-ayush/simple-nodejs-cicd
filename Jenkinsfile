@@ -23,7 +23,7 @@ pipeline{
         }
         stage("Dependency Check"){
             steps{
-                catchError(buildResult: 'SUCCESS', message: 'Error: Found Vulnerability!!!', stageResult: 'UNSTABLE') {
+                catchError(buildResult: 'UNSTABLE', message: 'Error: Found Vulnerability!!!', stageResult: 'UNSTABLE') {
                     script{
                         sh " npm audit --audit-level=high "
                     }
