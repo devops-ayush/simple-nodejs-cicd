@@ -28,7 +28,7 @@ pipeline{
             steps{
                 catchError(buildResult: 'SUCCESS', message: 'Error: Found Vulnerability!!!', stageResult: 'UNSTABLE') {
                     sh 'npm audit'
-                    $DEPENDENCY_CHECK = 'UNSTABLE'
+                    env.DEPENDENCY_CHECK = 'UNSTABLE'
                 }
             }
         }   
